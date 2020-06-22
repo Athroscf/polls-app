@@ -1,0 +1,16 @@
+.Poll {
+    margin: 0 5%;
+    width: 40%;
+    align-items: center;
+    text-align: center;
+    float: left;
+}
+
+.RadioGroup {
+    display: block;
+    margin-bottom: 2%;
+}
+
+.RadioButton {
+    display: inline-block;
+}
