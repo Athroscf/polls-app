@@ -12,4 +12,4 @@ export class Stats extends Component {
     }
 }
 
-export default Stats
+export default Stats;

@@ -1,0 +1,4 @@
+export const FETCH_POLL_TITLES = 'FETCH_POLL_TITLES';
+export const FETCH_POLL = 'FETCH_POLL';
+export const ADD_ANSWER = 'ADD_ANSWER';
+export const FETCH_RESULTS = 'FETCH_RESULTS';
