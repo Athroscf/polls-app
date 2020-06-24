@@ -10,7 +10,9 @@ const PollList = ( props ) => {
         <div className={classes.PollList}>
             <h3>Encuestas</h3>
             <List>
-                <ListItem pollName="Videojuegos"/>
+                <ListItem
+                    clicked={props.pollSelected}
+                    pollName="Videojuegos"/>
             </List>
             <Button content="Volver" click={props.clicked}/>
         </div>
