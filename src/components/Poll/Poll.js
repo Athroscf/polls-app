@@ -14,8 +14,8 @@ import classes from './Poll.css';
 const poll = ( props ) => {
     return (
         <div className={classes.Poll}>
-            <Typography variant="h2">
-                { props.pollName }
+            <Typography variant="h5" className={classes.Typography}>
+                Encuesta: { props.questions.pollName }
             </Typography>
             <form onSubmit={ props.handleSubmit }>
                 <Label htmlFor='firstQuestion'>{ props.questions.first }</Label>
