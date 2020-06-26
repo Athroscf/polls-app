@@ -1,15 +1,22 @@
 import * as actionTypes from './actionTypes';
+import axios from '../../axios-polls';
 
-export const fetchPollTitles = () => {
-    return {
-        type: actionTypes.FETCH_POLL_TITLES
+export const initPolls = () => {
+    return dispatch => {
+        axios.get('/listPolls')
+            .then( response => {
+                dispatch(setPolls(response.data.result))
+            })
+            .catch( error => {
+                dispatch(fetchPollsFailed())
+            })
     }
 }
 
-export const fetchPoll = ( id ) => {
+export const setPolls = ( polls ) => {
     return {
-        type: actionTypes.FETCH_POLL,
-        pollId: id
+        type: actionTypes.SET_POLLS,
+        polls: polls
     }
 }
 
@@ -24,5 +31,17 @@ export const fetchResults = ( id ) => {
     return {
         type: actionTypes.FETCH_RESULTS,
         pollId: id
+    }
+}
+
+export const fetchPollsFailed = () => {
+    return {
+        type: actionTypes.FETCH_POLLS_FAILED
+    }
+}
+
+export const fetchResultsFailed = ( id ) => {
+    return {
+        type: actionTypes.FETCH_RESULTS_FAILED
     }
 }

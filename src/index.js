@@ -11,11 +11,11 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import pollsReducer from './store/reducers/polls';
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION__ || compose;
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(pollsReducer, composeEnhancers(
     applyMiddleware(thunk)
-))
+));
 
 const app = (
     <Provider store={store}>

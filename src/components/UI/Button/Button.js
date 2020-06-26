@@ -7,6 +7,7 @@ const button = ( props ) => {
     return (
         <div>
             <Button
+                type={props.type}
                 className={classes.Button}
                 variant="contained"
                 onClick={props.click}>

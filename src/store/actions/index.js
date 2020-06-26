@@ -1,6 +1,5 @@
 export {
-    fetchPollTitles,
-    fetchPoll,
+    initPolls,
     addAnswer,
     fetchResults
 } from './polls';

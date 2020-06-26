@@ -10,9 +10,14 @@ const PollList = ( props ) => {
         <div className={classes.PollList}>
             <h3>Encuestas</h3>
             <List>
-                <ListItem
-                    clicked={props.pollSelected}
-                    pollName="Videojuegos"/>
+                {props.pollList.map(poll => (
+                    <div>
+                        <ListItem
+                            key={ poll._id }
+                            clicked={ () => props.pollSelected(poll) }
+                            pollName={poll.pollName} />
+                    </div>
+                ))}
             </List>
             <Button content="Volver" click={props.clicked}/>
         </div>

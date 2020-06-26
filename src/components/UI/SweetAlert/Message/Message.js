@@ -1,20 +1,23 @@
 import React from 'react';
 import Swal from 'sweetalert2';
 
-const successMessage = ( props ) => {
-    const success = Swal.fire({
-        text: props.message,
-        icon: props.icon,
-        showCancelButton: props.cancelButton,
-        cancelButtonText: props.cancelButtonText,
-        cancelButtonColor: '#BA000D',
-        confirmButtonText: props.confirmButtonText
-    })
+import Aux from '../../../../hoc/Auxiliary/Auxiliary';
+
+const message = ( props ) => {
     return (
-        <div>
-            {success}
-        </div>
+        <Aux>
+            {/* {Swal.fire({
+                text: props.message,
+                icon: props.icon,
+                showCancelButton: props.cancelButton,
+                cancelButtonText: props.cancelButtonText,
+                cancelButtonColor: '#BA000D',
+                confirmButtonText: props.confirmButtonText,
+            }).catch(error => {
+                console.log('[Error swal]', error);
+            })} */}
+        </Aux>
     )
 }
 
-export default successMessage;
+export default message;
