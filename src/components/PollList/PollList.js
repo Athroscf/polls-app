@@ -13,8 +13,8 @@ const PollList = ( props ) => {
                 {props.pollList.map(poll => (
                     <div>
                         <ListItem
-                            key={ poll._id }
-                            clicked={ () => props.pollSelected(poll) }
+                            index={ poll.id }
+                            clicked={props.pollSelected}
                             pollName={poll.pollName} />
                     </div>
                 ))}

@@ -8,12 +8,11 @@ const listItem = ( props ) => {
         <ListItem
             className={classes.ListItem}
             button
-            onChange={props.handleChange}
-            key={props.id}
-            onClick={props.clicked}>
+            key={props.index}
+            onClick={() => props.clicked(props.index)}>
             {props.pollName}
         </ListItem>
     )
 }
 
-export default listItem
+export default listItem;

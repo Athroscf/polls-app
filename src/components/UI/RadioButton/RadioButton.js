@@ -5,7 +5,7 @@ const radioButton = ( props ) => {
     return (
         <div>
             <RadioButton
-                className={props.className}
+                className={props.class}
                 name={props.name}
                 value={props.value}
                 onChange={props.changed}/>
