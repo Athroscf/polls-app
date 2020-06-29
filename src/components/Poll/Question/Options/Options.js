@@ -13,7 +13,7 @@ const options = ( props ) => {
                     name={option.option}
                     value={option.option}
                     content={option.option}
-                    changed={props.changed} />
+                    changed={(event) => props.changed(event, props.questionId)} />
                 </div>
             ))}
         </RadioGroup>

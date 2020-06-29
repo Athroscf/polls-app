@@ -4,18 +4,17 @@ import Swal from 'sweetalert2';
 import Aux from '../../../../hoc/Auxiliary/Auxiliary';
 
 const message = ( props ) => {
+    let message = [Swal.fire({
+        text: props.text,
+        icon: props.icon,
+        showCancelButton: props.cancelButton,
+        cancelButtonText: props.cancelButtonText,
+        cancelButtonColor: '#BA000D',
+        confirmButtonText: props.confirmButtonText,
+    })]
     return (
         <Aux>
-            {/* {Swal.fire({
-                text: props.message,
-                icon: props.icon,
-                showCancelButton: props.cancelButton,
-                cancelButtonText: props.cancelButtonText,
-                cancelButtonColor: '#BA000D',
-                confirmButtonText: props.confirmButtonText,
-            }).catch(error => {
-                console.log('[Error swal]', error);
-            })} */}
+            {message}
         </Aux>
     )
 }

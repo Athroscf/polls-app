@@ -13,7 +13,9 @@ const Poll = ( props ) => {
                 Encuesta: { props.questions.pollName }
             </Typography>
             <form onSubmit={ props.clicked }>
-                <Questions questions={props.questions.questions}/>
+                <Questions
+                    questions={props.questions.questions}
+                    changed={props.changed} />
                 <Button
                     type="submit"
                     content="Responder Encuesta" />

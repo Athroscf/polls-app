@@ -10,10 +10,27 @@ import axios from '../../axios-polls';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import * as pollActions from '../../store/actions';
+import Swal from '../../components/UI/SweetAlert/Message/Message';
 
 export class Polls extends Component {
     state = {
-        answers: {},
+        answers: {
+            0: {
+                answer: null
+            },
+            1: {
+                answer: null
+            },
+            2: {
+                answer: null
+            },
+            3: {
+                answer: null
+            },
+            4: {
+                answer: null
+            }
+        },
         showPoll: false,
         submitting: null,
         pollId: null
@@ -58,7 +75,7 @@ export class Polls extends Component {
     answerHandler = event => {
         event.preventDefault();
 
-        const answer = this.state.answer;
+        const answer = this.state.answers;
 
         console.log('[answerHandler]', answer);
 
@@ -66,16 +83,22 @@ export class Polls extends Component {
     }
 
     onChangeHandler = ( event, inputIdentifier ) => {
-        const updatedForm = {
-            ...this.state.answer
+        const updatedAnswerForm = {
+            ...this.state.answers
         }
 
-        updatedForm[inputIdentifier] = event.target.value;
+        const updatedFormElement = {
+            ...updatedAnswerForm[inputIdentifier]
+        }
 
-        this.setState({
-            answer: updatedForm
-        })
-        console.log('[onChangeHandler]', this.state);
+        updatedFormElement.answer = event.target.value;
+        updatedAnswerForm[inputIdentifier] = updatedFormElement;
+
+        setTimeout( () => {
+            this.setState({
+                answers: updatedAnswerForm
+            })
+        }, 200)
     }
 
     render() {

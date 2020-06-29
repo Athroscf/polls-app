@@ -51,7 +51,7 @@ export const addAnswerStart = () => {
 export const addAnswer = ( answerData ) => {
     return dispatch => {
         dispatch( addAnswerStart() );
-        axios.post( '/answer.json', answerData )
+        axios.post( '/answers.json', answerData )
             .then( response => {
                 console.log( response.data );
                 dispatch( addAnswerSuccess( response.data.name, answerData ) );
