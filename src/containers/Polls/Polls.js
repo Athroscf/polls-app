@@ -10,7 +10,6 @@ import axios from '../../axios-polls';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import * as pollActions from '../../store/actions';
-import Swal from '../../components/UI/SweetAlert/Message/Message';
 
 export class Polls extends Component {
     state = {
@@ -32,8 +31,7 @@ export class Polls extends Component {
             }
         },
         showPoll: false,
-        submitting: null,
-        pollId: null
+        submitting: null
     }
 
     componentDidMount () {
@@ -49,10 +47,11 @@ export class Polls extends Component {
             this.setState(( prevState, props ) => {
                 return {
                     ...prevState,
-                    pollId: id,
                     showPoll: true
                 }
             })
+            let props = {...this.props.pollId};
+            props.pollId = id;
         }, 100);
     }
 
@@ -79,7 +78,8 @@ export class Polls extends Component {
 
         console.log('[answerHandler]', answer);
 
-        this.props.onAnsweringPoll(answer);
+        this.props.onAnsweringPoll(this.props.pollId, answer);
+        this.toStatsHandler();
     }
 
     onChangeHandler = ( event, inputIdentifier ) => {
@@ -121,10 +121,11 @@ export class Polls extends Component {
 
         let answerPoll = null;
 
-        if (this.state.showPoll && this.state.pollId) {
+        if (this.state.showPoll) {
             answerPoll = (
                 <Poll
-                    questions={this.props.polls[this.state.pollId]}
+                    pollId={this.props.pollId}
+                    questions={this.props.polls[this.props.pollId]}
                     changed={this.onChangeHandler}
                     clicked={this.answerHandler} />
             )
@@ -150,14 +151,16 @@ export class Polls extends Component {
 const mapStateToProps = state => {
     return {
         error: state.error,
-        polls: state.polls
+        polls: state.polls,
+        pollId: state.pollId,
+        loading: state.loading
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         onInitPolls: () => dispatch(pollActions.initPolls()),
-        onAnsweringPoll: (answerData) => dispatch(pollActions.addAnswer(answerData))
+        onAnsweringPoll: (pollId, answerData) => dispatch(pollActions.addAnswer(pollId, answerData))
     }
 }
 

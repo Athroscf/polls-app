@@ -48,10 +48,10 @@ export const addAnswerStart = () => {
     }
 }
 
-export const addAnswer = ( answerData ) => {
+export const addAnswer = ( id, answerData ) => {
     return dispatch => {
         dispatch( addAnswerStart() );
-        axios.post( '/answers.json', answerData )
+        axios.post( '/polls/'+ id +'/answers.json', answerData )
             .then( response => {
                 console.log( response.data );
                 dispatch( addAnswerSuccess( response.data.name, answerData ) );
@@ -59,6 +59,25 @@ export const addAnswer = ( answerData ) => {
             .catch( error => {
                 dispatch( addAnswerFailed( error ) );
             } );
+    }
+}
+
+export const initResults = ( id ) => {
+    return dispatch => {
+        axios.get('/polls/'+ id +'/answers.json')
+            .then( response => {
+                const fetchedPolls = [];
+                for ( let key in response.data ) {
+                    fetchedPolls.push( {
+                        ...response.data[key],
+                        id: key
+                    })
+                }
+                dispatch(setPolls(fetchedPolls));
+            })
+            .catch( error => {
+                dispatch(fetchPollsFailed())
+            })
     }
 }
 

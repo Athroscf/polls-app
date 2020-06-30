@@ -2,6 +2,7 @@ import * as actionTypes from '../actions/actionTypes';
 import { updateObject } from '../utility';
 
 const initialState = {
+    pollId: 0,
     polls: null,
     answered: false,
     loading: false,
@@ -20,15 +21,15 @@ const fetchPollsFailed = ( state, action ) => {
 }
 
 const addAnswerInit = ( state, action ) => {
-    return updateObject( state, { answered: false });
+    return updateObject( state, { answered: true });
 }
 
 const addAnswerStart = ( state, action ) => {
-    return updateObject( state, { loading: false } );
+    return updateObject( state, { loading: true } );
 }
 
 const addAnswerSuccess = ( state, action ) => {
-    const newAnswer = updateObject( action.answerData, { id: action.pollId } );
+    const newAnswer = updateObject( action.answerData, { id: action.id } );
     return updateObject( state, {
         loading: false,
         answered: true,
@@ -37,6 +38,8 @@ const addAnswerSuccess = ( state, action ) => {
 }
 
 const addAnswerFailed = ( state, action ) => {
+    console.log('[ON_ANSWER_FAILED]', action.id);
+    
     return updateObject( state, { loading: false } );
 }
 

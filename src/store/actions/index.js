@@ -1,5 +1,5 @@
 export {
     initPolls,
     addAnswer,
-    fetchResults
+    initResults
 } from './polls';

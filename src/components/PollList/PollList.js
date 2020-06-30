@@ -21,7 +21,9 @@ const PollList = ( props ) => {
             return arr.concat(el)
         }, []);
     if (transformedPolls.length === 0) {
-        transformedPolls = <p>No se pudo cargar las encuestas! Recargue la pagina</p>;
+        transformedPolls = <Swal
+                                text="No se pudo cargar las encuestas! Recargue la pagina"
+                                confirmButtonText="Recargar la pagina"/>;
     }
     return (
         <div className={classes.PollList}>
