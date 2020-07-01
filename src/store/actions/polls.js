@@ -3,6 +3,7 @@ import axios from '../../axios-polls';
 
 export const initPolls = () => {
     return dispatch => {
+        dispatch(fetchPollsStart())
         axios.get('/polls.json')
             .then( response => {
                 const fetchedPolls = [];
@@ -13,16 +14,23 @@ export const initPolls = () => {
                     })
                 }
                 dispatch(setPolls(fetchedPolls));
+                dispatch(setResults(fetchedPolls));
             })
             .catch( error => {
-                dispatch(fetchPollsFailed())
+                dispatch(fetchPollsFailed( error ))
             })
+    }
+}
+
+export const fetchPollsStart = () => {
+    return {
+        type: actionTypes.FETCH_POLLS_START
     }
 }
 
 export const setPolls = ( polls ) => {
     return {
-        type: actionTypes.SET_POLLS,
+        type: actionTypes.FETCH_POLLS_SUCCESS,
         polls: polls
     }
 }
@@ -53,7 +61,6 @@ export const addAnswer = ( id, answerData ) => {
         dispatch( addAnswerStart() );
         axios.post( '/polls/'+ id +'/answers.json', answerData )
             .then( response => {
-                console.log( response.data );
                 dispatch( addAnswerSuccess( response.data.name, answerData ) );
             } )
             .catch( error => {
@@ -62,40 +69,15 @@ export const addAnswer = ( id, answerData ) => {
     }
 }
 
-export const initResults = ( id ) => {
-    return dispatch => {
-        axios.get('/polls/'+ id +'/answers.json')
-            .then( response => {
-                const fetchedPolls = [];
-                for ( let key in response.data ) {
-                    fetchedPolls.push( {
-                        ...response.data[key],
-                        id: key
-                    })
-                }
-                dispatch(setPolls(fetchedPolls));
-            })
-            .catch( error => {
-                dispatch(fetchPollsFailed())
-            })
-    }
-}
-
-export const fetchResults = ( id ) => {
+export const setResults = ( polls ) => {
     return {
-        type: actionTypes.FETCH_RESULTS_START,
-        pollId: id
+        type: actionTypes.SET_RESULTS,
+        results: polls
     }
 }
 
-export const fetchPollsFailed = () => {
+export const fetchPollsFailed = ( error ) => {
     return {
         type: actionTypes.FETCH_POLLS_FAILED
-    }
-}
-
-export const fetchResultsFailed = ( id ) => {
-    return {
-        type: actionTypes.FETCH_RESULTS_FAILED
     }
 }

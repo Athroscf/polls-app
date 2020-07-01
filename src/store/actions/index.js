@@ -1,5 +1,5 @@
 export {
     initPolls,
     addAnswer,
-    initResults
+    setResults
 } from './polls';

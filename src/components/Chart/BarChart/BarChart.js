@@ -5,13 +5,11 @@ const barChart = ( props ) => {
     return (
         <div>
             <Bar
-                height='250'
                 data={{
-                    // labels: [],
+                    labels: [props.labels],
                     datasets: [{
                         barPercentage: 0.5,
-                        label: [ props.labels ],
-                        data: [ props.first, props.first],
+                        data: [ props.data ],
                         backgroundColor: [
                             'rgba(255, 99, 132, 0.2)',
                             'rgba(54, 162, 235, 0.2)'

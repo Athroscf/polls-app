@@ -2,10 +2,12 @@ import React from 'react';
 
 import BarChart from './BarChart/BarChart';
 
-const chart = () => {
+const chart = ( props ) => {
     return (
         <div>
-            <BarChart />
+            <BarChart
+                title={props.title}
+                labels={props.labels} />
         </div>
     )
 }

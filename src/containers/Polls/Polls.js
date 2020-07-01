@@ -50,9 +50,10 @@ export class Polls extends Component {
                     showPoll: true
                 }
             })
-            let props = {...this.props.pollId};
-            props.pollId = id;
         }, 100);
+        let props = {...this.props.pollId};
+        props.pollId = id;
+        console.log('[SELECT_HANDLER_POLL_ID]', props.pollId)
     }
 
     submitAnswerHandler = () => {

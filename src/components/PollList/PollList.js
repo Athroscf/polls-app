@@ -4,7 +4,6 @@ import { List } from '@material-ui/core';
 import ListItem from '../UI/ListItem/ListItem';
 import Button from '../UI/Button/Button';
 import classes from './PollList.css';
-import Swal from '../../components/UI/SweetAlert/Message/Message';
 
 const PollList = ( props ) => {
     let transformedPolls = Object.keys( props.pollList )
@@ -21,9 +20,7 @@ const PollList = ( props ) => {
             return arr.concat(el)
         }, []);
     if (transformedPolls.length === 0) {
-        transformedPolls = <Swal
-                                text="No se pudo cargar las encuestas! Recargue la pagina"
-                                confirmButtonText="Recargar la pagina"/>;
+        transformedPolls = <p>No se pudo cargar las encuestas! Recargue la pagina!</p>;
     }
     return (
         <div className={classes.PollList}>

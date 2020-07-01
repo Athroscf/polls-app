@@ -1,0 +1,23 @@
+.Charts {
+    margin: 0 5%;
+    width: 80%;
+    align-items: center;
+    text-align: center;
+}
+
+.Chart {
+    margin-top: 5%;
+}
+
+.Typography {
+    margin-bottom: 5%;
+}
+
+.HideLabelsArray {
+    visibility: hidden;
+}
+
+.Button {
+    margin-top: 5%;
+    margin-left: 10%;
+}
