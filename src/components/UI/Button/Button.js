@@ -11,7 +11,7 @@ const button = ( props ) => {
                 className={classes.Button}
                 variant="contained"
                 onClick={props.click}>
-                {props.content}
+                {props.children}
             </Button>
         </div>
     )

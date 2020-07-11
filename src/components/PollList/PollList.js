@@ -28,7 +28,9 @@ const PollList = ( props ) => {
             <List>
                 {transformedPolls}
             </List>
-            <Button content="Volver" click={props.clicked}/>
+            <Button click={props.clicked}>
+                Volver
+            </Button>
         </div>
     )
 }

@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import Aux from '../../hoc/Auxiliary/Auxiliary';
 import Button from '../../components/UI/Button/Button';
 import classes from './Home.css';
 
 export class Home extends Component {
-    nextPageHandler = () => {
+    nextPageHandler = ( page ) => {
         this.props.history.push({
-            pathname: '/polls'
+            pathname: '/' + page
         })
     }
 
@@ -15,15 +16,27 @@ export class Home extends Component {
         return (
             <Aux>
                 <div className={classes.Home}>
-                    <h1>Responde nuestra encuesta</h1>
+                    {/* <h1>Responde nuestra encuesta</h1> */}
                     <Button
-                        content="Responder Encuesta"
-                        click={this.nextPageHandler} />
-                    {/* <Button content=/> */}
+                        click={() => this.nextPageHandler('polls')}>
+                            Responder Encuesta
+                    </Button>
+                    { this.props.isAuth ?
+                        <Button
+                            click={() => this.nextPageHandler('stats')}>
+                                Resultados
+                        </Button> : null
+                    }
                 </div>
             </Aux>
         )
     }
-}
+};
 
-export default Home;
+const mapStateToProps = state => {
+    return {
+        isAuth: state.auth.token !== null
+    };
+};
+
+export default connect(mapStateToProps)(Home);

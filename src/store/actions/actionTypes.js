@@ -8,3 +8,8 @@ export const ADD_ANSWER_FAILED = 'ADD_ANSWER_FAILED';
 export const ADD_ANSWER_INIT = 'ADD_ANSWER_INIT';
 
 export const SET_RESULTS = 'SET_RESULTS';
+
+export const AUTH_START = 'AUTH_START';
+export const AUTH_SUCCESS = 'AUTH_SUCCESS';
+export const AUTH_FAIL = 'AUTH_FAIL';
+export const AUTH_LOGOUT = 'AUTH_LOGOUT';

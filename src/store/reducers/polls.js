@@ -11,7 +11,6 @@ const initialState = {
 };
 
 const fetchPollsStart = ( state, action ) => {
-    console.log('[FETCH_EXECUTED]');
     return updateObject(state, { loading: true } );
 }
 
@@ -32,7 +31,6 @@ const addAnswerInit = ( state, action ) => {
 }
 
 const addAnswerStart = ( state, action ) => {
-    console.log('ANSWER_ACTION', action)
     return updateObject( state, { loading: true } );
 }
 

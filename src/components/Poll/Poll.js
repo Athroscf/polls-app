@@ -16,9 +16,9 @@ const Poll = ( props ) => {
                 <Questions
                     questions={props.questions.questions}
                     changed={props.changed} />
-                <Button
-                    type="submit"
-                    content="Responder Encuesta" />
+                <Button type="submit">
+                    Responder
+                </Button>
             </form>
         </div>
     )

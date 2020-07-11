@@ -92,18 +92,17 @@ export class Stats extends Component {
 
 const mapStateToProps = state => {
     return {
-        error: state.error,
-        pollId: state.pollId,
-        polls: state.polls,
-        results: state.results,
-        loading: state.loading
+        error: state.polls.error,
+        pollId: state.polls.pollId,
+        polls: state.polls.polls,
+        results: state.polls.results,
+        loading: state.polls.loading
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         onInitPolls: () => dispatch(pollActions.initPolls())
-        
     }
 }
 

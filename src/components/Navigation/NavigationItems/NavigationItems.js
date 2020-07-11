@@ -1,19 +1,17 @@
 import React from 'react';
 import NavigationItem from './NavigationItem/NavigationItem';
-import Title from './Title/Title';
-// import LoginButton from './Login/LoginButton';
 
+import Typography from '../../UI/Typography/Typography';
 import classes from './NavigationItems.css'
 
-const navigationItems = () => {
+const navigationItems = ( props ) => {
     return (
         <ul className={classes.NavigationItems}>
-            <NavigationItem>
-                <Title content="Web de Encuestas"/>
+            <NavigationItem link={props.link} exact={props.exact}>
+                <Typography variant={props.variant}>
+                    {props.content}
+                </Typography>
             </NavigationItem>
-            {/* <NavigationItem>
-                <LoginButton content="Iniciar Sesion"/>
-            </NavigationItem> */}
         </ul>
     )
 }

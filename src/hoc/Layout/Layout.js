@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import Aux from '../Auxiliary/Auxiliary';
 import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
@@ -8,7 +9,7 @@ export class Layout extends Component {
     render() {
         return (
             <Aux>
-                <Toolbar />
+                <Toolbar isAuth={this.props.isAuthenticated}/>
                 <main className={classes.Layout}>
                     {this.props.children}
                 </main>
@@ -17,4 +18,10 @@ export class Layout extends Component {
     }
 }
 
-export default Layout;
+const mapStateToProps = state => {
+    return {
+        isAuthenticated: state.auth.token !== null
+    }
+}
+
+export default connect(mapStateToProps)(Layout);

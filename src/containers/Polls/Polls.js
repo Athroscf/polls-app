@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import * as pollActions from '../../store/actions';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
 import PollList from '../../components/PollList/PollList';
 import Poll from '../../components/Poll/Poll';
@@ -9,7 +10,7 @@ import classes from './Polls.css';
 import axios from '../../axios-polls';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import Spinner from '../../components/UI/Spinner/Spinner';
-import * as pollActions from '../../store/actions';
+import SweetAlert from '../../components/UI/SweetAlert/Message/Message';
 
 export class Polls extends Component {
     state = {
@@ -77,10 +78,19 @@ export class Polls extends Component {
 
         const answer = this.state.answers;
 
-        console.log('[answerHandler]', answer);
-
         this.props.onAnsweringPoll(this.props.pollId, answer);
-        this.toStatsHandler();
+
+        if (this.props.isAuth) {
+            this.toStatsHandler();
+        } else {(
+            SweetAlert({
+                text: "Tu respuesta ha sido guardada! Quieres ver los resultados de esta encuesta?",
+                icon: "success",
+                confirmButtonText: "Si",
+                showCancelButton: true,
+                cancelButtonText: "No"
+            })
+        )}
     }
 
     onChangeHandler = ( event, inputIdentifier ) => {
@@ -151,10 +161,11 @@ export class Polls extends Component {
 
 const mapStateToProps = state => {
     return {
-        error: state.error,
-        polls: state.polls,
-        pollId: state.pollId,
-        loading: state.loading
+        error: state.polls.error,
+        polls: state.polls.polls,
+        pollId: state.polls.pollId,
+        loading: state.polls.loading,
+        isAuth: state.auth.token !== null
     }
 }
 
