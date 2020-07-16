@@ -5,7 +5,7 @@ const initialState = {
     results: null,
     pollId: 0,
     polls: null,
-    answered: false,
+    answering: false,
     loading: false,
     error: false
 };
@@ -23,32 +23,32 @@ const fetchPollsSuccess = ( state, action ) => {
 }
 
 const fetchPollsFailed = ( state, action ) => {
-    return updateObject( state, { error: true } );
+    return updateObject( state, {
+        error: true,
+        loading: false
+    } );
 }
 
 const addAnswerInit = ( state, action ) => {
-    return updateObject( state, { answered: true });
+    return updateObject( state, { answering: true });
 }
 
 const addAnswerStart = ( state, action ) => {
-    return updateObject( state, { loading: true } );
+    return updateObject( state, { answering: true } );
 }
 
 const addAnswerSuccess = ( state, action ) => {
-    const newAnswer = updateObject( action.answerData, { id: action.id } );
     return updateObject( state, {
         loading: false,
-        answered: true,
-        polls: state.answers.concat( newAnswer )
+        answering: false
     });
 }
 
 const addAnswerFailed = ( state, action ) => {
-    return updateObject( state, { loading: false } );
+    return updateObject( state, { answering: false } );
 }
 
 const setResults = ( state, action ) => {
-    console.log('[RESULTS]', action)
     return updateObject( state, {
         results: updateResults(state),
         error: false

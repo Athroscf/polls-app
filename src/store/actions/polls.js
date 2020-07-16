@@ -1,5 +1,6 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios-polls';
+import SweetAlert from '../../components/UI/SweetAlert/Message/Message';
 
 export const initPolls = () => {
     return dispatch => {
@@ -56,16 +57,41 @@ export const addAnswerStart = () => {
     }
 }
 
-export const addAnswer = ( id, answerData ) => {
+export const addAnswer = ( id, answerData, click ) => {
     return dispatch => {
         dispatch( addAnswerStart() );
-        axios.post( '/polls/'+ id +'/answers.json', answerData )
-            .then( response => {
-                dispatch( addAnswerSuccess( response.data.name, answerData ) );
-            } )
-            .catch( error => {
-                dispatch( addAnswerFailed( error ) );
-            } );
+        if (answerData == null || Object.keys(answerData).length < 5) {
+            SweetAlert({
+                show: true,
+                text: "Porfavor responde todas las preguntas!",
+                icon: "warning",
+                confirmButtonText: "Ok"
+            })
+            dispatch( addAnswerFailed( 'Error' ) );
+        } else {
+            axios.post('/polls/'+ id +'/answers.jon', answerData )
+                .then( response => {
+                    SweetAlert({
+                        show: true,
+                        text: "Tus respuestas han sido guardadas!",
+                        icon: "success",
+                        confirmButtonText: "Ok",
+                        confirmClicked: click
+                    })
+                    dispatch( addAnswerSuccess( response.data.name, answerData ) );
+                } )
+                .catch( error => {
+                    SweetAlert({
+                        show: true,
+                        text: "Tus respuestas no se han podido guardar!",
+                        icon: "error",
+                        confirmButtonText: "Recargar pagina"
+                        // confirmClicked: window.location.reload()
+                    })
+                    dispatch( addAnswerFailed( error ) );
+                }
+            );
+        }
     }
 }
 

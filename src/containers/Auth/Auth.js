@@ -127,9 +127,25 @@ export class Auth extends Component {
         let errorMessage = null;
 
         if (this.props.error) {
-            errorMessage = (
-                <p>{this.props.error.message}</p>
-            );
+            switch (this.props.error.message) {
+                case 'EMAIL_NOT_FOUND':
+                    errorMessage = (
+                        <p>No existe una cuenta con este correo electronico!</p>
+                    );
+                    break;
+                case 'INVALID_PASSWORD':
+                    errorMessage = (
+                        <p>Contraseña Incorrecta!</p>
+                    );
+                    break;
+                case 'USER_DISABLED':
+                    errorMessage = (
+                        <p>Este usuario ha sido deshabilitado!</p>
+                    );
+                    break;
+                default:
+                    break;
+            }
         }
 
         let authRedirect = null;

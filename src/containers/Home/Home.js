@@ -16,7 +16,7 @@ export class Home extends Component {
         return (
             <Aux>
                 <div className={classes.Home}>
-                    {/* <h1>Responde nuestra encuesta</h1> */}
+                    <h1>Responde nuestra encuesta</h1>
                     <Button
                         click={() => this.nextPageHandler('polls')}>
                             Responder Encuesta
@@ -25,7 +25,8 @@ export class Home extends Component {
                         <Button
                             click={() => this.nextPageHandler('stats')}>
                                 Resultados
-                        </Button> : null
+                        </Button> :
+                        <p>Para ver los resultados debes iniciar sesion!</p>
                     }
                 </div>
             </Aux>

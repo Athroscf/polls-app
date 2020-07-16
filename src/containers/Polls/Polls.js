@@ -5,32 +5,14 @@ import * as pollActions from '../../store/actions';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
 import PollList from '../../components/PollList/PollList';
 import Poll from '../../components/Poll/Poll';
-import Modal from '../../components/UI/Modal/Modal';
 import classes from './Polls.css';
 import axios from '../../axios-polls';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import Spinner from '../../components/UI/Spinner/Spinner';
-import SweetAlert from '../../components/UI/SweetAlert/Message/Message';
 
 export class Polls extends Component {
     state = {
-        answers: {
-            0: {
-                answer: null
-            },
-            1: {
-                answer: null
-            },
-            2: {
-                answer: null
-            },
-            3: {
-                answer: null
-            },
-            4: {
-                answer: null
-            }
-        },
+        answers: null,
         showPoll: false,
         submitting: null
     }
@@ -54,7 +36,6 @@ export class Polls extends Component {
         }, 100);
         let props = {...this.props.pollId};
         props.pollId = id;
-        console.log('[SELECT_HANDLER_POLL_ID]', props.pollId)
     }
 
     submitAnswerHandler = () => {
@@ -73,24 +54,16 @@ export class Polls extends Component {
         this.props.history.push('/stats');
     }
 
+    reloadPage = () => {
+        window.location.reload()
+    }
+
     answerHandler = event => {
         event.preventDefault();
 
         const answer = this.state.answers;
 
-        this.props.onAnsweringPoll(this.props.pollId, answer);
-
-        if (this.props.isAuth) {
-            this.toStatsHandler();
-        } else {(
-            SweetAlert({
-                text: "Tu respuesta ha sido guardada! Quieres ver los resultados de esta encuesta?",
-                icon: "success",
-                confirmButtonText: "Si",
-                showCancelButton: true,
-                cancelButtonText: "No"
-            })
-        )}
+        this.props.onAnsweringPoll(this.props.pollId, answer, this.toHomeHandler, this.reloadPage);
     }
 
     onChangeHandler = ( event, inputIdentifier ) => {
@@ -116,9 +89,6 @@ export class Polls extends Component {
         let list = this.props.error ? <p>No se pudo cargar las encuestas!</p> :
                                       <Spinner />;
 
-        let submit = this.state.submitting ? <p>No se pudo guardar sus respuestas!</p> :
-                                             <Spinner />;
-
         if ( this.props.polls ) {
             list = (
                 <Aux>
@@ -142,15 +112,13 @@ export class Polls extends Component {
             )
         }
 
+        if (this.props.answering) {
+            answerPoll = <Spinner />
+        }
+
         return (
             <div className={classes.Polls}>
                 <Aux>
-                    <Modal
-                        show={this.state.submitting}
-                        modalClosed={this.state.submitting ? this.submitAnswerHandler :
-                                                            this.submitAnswerFailedHandler} >
-                        {submit}
-                    </Modal>
                     {list}
                     {answerPoll}
                 </Aux>
@@ -165,6 +133,7 @@ const mapStateToProps = state => {
         polls: state.polls.polls,
         pollId: state.polls.pollId,
         loading: state.polls.loading,
+        answering: state.polls.answering,
         isAuth: state.auth.token !== null
     }
 }
@@ -172,7 +141,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onInitPolls: () => dispatch(pollActions.initPolls()),
-        onAnsweringPoll: (pollId, answerData) => dispatch(pollActions.addAnswer(pollId, answerData))
+        onAnsweringPoll: (pollId, answerData, OnConfirm, OnError) => dispatch(pollActions.addAnswer(pollId, answerData, OnConfirm, OnError))
     }
 }
 
