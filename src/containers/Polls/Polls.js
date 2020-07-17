@@ -63,7 +63,12 @@ export class Polls extends Component {
 
         const answer = this.state.answers;
 
-        this.props.onAnsweringPoll(this.props.pollId, answer, this.toHomeHandler, this.reloadPage);
+        this.props.onAnsweringPoll(
+            this.props.pollId,
+            answer,
+            this.toHomeHandler,
+            this.reloadPage
+        );
     }
 
     onChangeHandler = ( event, inputIdentifier ) => {
