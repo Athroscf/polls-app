@@ -9,7 +9,7 @@ export class Layout extends Component {
     render() {
         return (
             <Aux>
-                <Toolbar isAuth={this.props.isAuthenticated}/>
+                <Toolbar isAuth={this.props.isAuthenticated} email={this.props.email}/>
                 <main className={classes.Layout}>
                     {this.props.children}
                 </main>
