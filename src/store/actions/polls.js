@@ -69,7 +69,7 @@ export const addAnswer = ( id, answerData, click ) => {
             })
             dispatch( addAnswerFailed( 'Error' ) );
         } else {
-            axios.post('/polls/'+ id +'/answers.jon', answerData )
+            axios.post('/polls/'+ id +'/answers.json', answerData )
                 .then( response => {
                     SweetAlert({
                         show: true,
