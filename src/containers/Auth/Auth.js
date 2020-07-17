@@ -131,8 +131,23 @@ export class Auth extends Component {
                 changed={ ( event ) => this.inputChangeHandler(event, formElement.id)} />
         ));
 
+        let auth = (
+            <form onSubmit={this.submitHandler}>
+                <Typography variant="h4">
+                    {this.state.isSignIn ? 'Iniciar Sesion' : 'Crear Cuenta'}
+                </Typography>
+                {form}
+                <Button type="submit">
+                    {this.state.isSignIn ? 'Iniciar Sesion' : 'Registrarse'}
+                </Button>
+                <a onClick={this.switchAuthModeHandler}>
+                    {this.state.isSignIn ? 'Aun no tienes una cuenta? Registrate!' : 'Ya tienes una cuenta? Inicia Sesion'}
+                </a>
+            </form>
+        )
+
         if (this.props.loading) {
-            form = <Spinner />
+            auth = <Spinner />
         }
 
         let authRedirect = null;
@@ -144,19 +159,7 @@ export class Auth extends Component {
         return (
             <div className={classes.Auth}>
                 {authRedirect}
-                {/* {errorMessage} */}
-                <form onSubmit={this.submitHandler}>
-                    <Typography variant="h4">
-                        {this.state.isSignIn ? 'Iniciar Sesion' : 'Crear Cuenta'}
-                    </Typography>
-                    {form}
-                    <Button type="submit">
-                        {this.state.isSignIn ? 'Iniciar Sesion' : 'Registrarse'}
-                    </Button>
-                    <a onClick={this.switchAuthModeHandler}>
-                        {this.state.isSignIn ? 'Aun no tienes una cuenta? Registrate!' : 'Ya tienes una cuenta? Inicia Sesion'}
-                    </a>
-                </form>
+                {auth}
             </div>
         )
     }
