@@ -64,7 +64,7 @@ export const addAnswerStart = () => {
     }
 }
 
-export const addAnswer = ( id, answerData, click ) => {
+export const addAnswer = ( id, answerData, onConfirm, onError ) => {
     return dispatch => {
         dispatch( addAnswerStart() );
         if (answerData == null || Object.keys(answerData).length < 5) {
@@ -83,7 +83,7 @@ export const addAnswer = ( id, answerData, click ) => {
                         text: "Tus respuestas han sido guardadas!",
                         icon: "success",
                         confirmButtonText: "Ok",
-                        confirmClicked: click
+                        confirmClicked: onConfirm
                     })
                     dispatch( addAnswerSuccess( response.data.name, answerData ) );
                 } )
@@ -92,8 +92,8 @@ export const addAnswer = ( id, answerData, click ) => {
                         show: true,
                         text: "Tus respuestas no se han podido guardar!",
                         icon: "error",
-                        confirmButtonText: "Recargar pagina"
-                        // confirmClicked: window.location.reload()
+                        confirmButtonText: "Recargar pagina",
+                        confirmClicked: onError
                     })
                     dispatch( addAnswerFailed( error ) );
                 }

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import Aux from '../Auxiliary/Auxiliary';
 import Modal from '../../components/UI/Modal/Modal';
-// import Swal from '../../components/UI/SweetAlert/Message/Message';
+import Swal from '../../components/UI/SweetAlert/Message/Message';
 
 const withErrorHandler = ( WrappedComponent, axios ) => {
     return class extends Component {
@@ -29,7 +29,7 @@ const withErrorHandler = ( WrappedComponent, axios ) => {
             this.setState({ error: null })
         }
 
-        refreshPage = () => {
+        reloadPage = () => {
             window.location.reload()
         }
 

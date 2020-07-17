@@ -7,7 +7,6 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import Typography from '../../components/UI/Typography/Typography';
-// import Swal from '../../components/UI/SweetAlert/Message/Message';
 import classes from './Auth.css';
 
 export class Auth extends Component {

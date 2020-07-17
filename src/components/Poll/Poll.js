@@ -1,5 +1,4 @@
 import React from 'react';
-// import Label from '@material-ui/core/InputLabel';
 
 import Typography from '@material-ui/core/Typography';
 import Button from '../UI/Button/Button';
