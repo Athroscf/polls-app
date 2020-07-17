@@ -1,5 +1,7 @@
 import axios from 'axios';
+
 import * as actionTypes from './actionTypes';
+import Swal from '../../components/UI/SweetAlert/Message/Message';
 
 export const authStart = () => {
     return {
@@ -36,7 +38,7 @@ export const checkAuthTimeout = ( expirationTime ) => {
     };
 };
 
-export const auth = ( email, password, isSignIn ) => {
+export const auth = ( email, password, isSignIn, click ) => {
     return dispatch => {
         dispatch( authStart());
         const authData = {
@@ -46,19 +48,28 @@ export const auth = ( email, password, isSignIn ) => {
         };
 
         let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAw2nGmwB3w41m2nXNJkbh5UbHUco6PKVo'
+        let show = false;
+        let message = null;
 
         if ( !isSignIn ) {
             url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAw2nGmwB3w41m2nXNJkbh5UbHUco6PKVo'
+            show = true;
+            message = 'Tu cuenta ha sido creada!'
         }
 
         axios.post(url, authData)
              .then(response => {
-                console.log(response);
                 dispatch(authSuccess(response.data.idToken, response.data.localId));
                 dispatch(checkAuthTimeout(response.data.expiresIn));
+                Swal({
+                    show: show,
+                    text: message,
+                    icon: "success",
+                    confirmButtonText: "Ok"
+                })
              })
              .catch(err => {
                 dispatch(authFail(err.response.data.error));
              })
-    }
-}
+    };
+};
