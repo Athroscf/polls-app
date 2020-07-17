@@ -57,9 +57,10 @@ const setResults = ( state, action ) => {
 
 const idingResults = ( state ) => {
     let fetchedResults = [];
+
     for ( let key in state) {
         fetchedResults.push( {
-            ...state.results[key],
+            ...state[key],
             id: key
         })
     }

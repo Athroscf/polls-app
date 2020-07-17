@@ -18,7 +18,7 @@ export class Polls extends Component {
     }
 
     componentDidMount () {
-        this.props.onInitPolls();
+        this.props.onInitPolls( this.reloadPage );
     }
 
     goBackHandler = () => {
@@ -140,7 +140,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onInitPolls: () => dispatch(pollActions.initPolls()),
+        onInitPolls: ( click ) => dispatch(pollActions.initPolls( click )),
         onAnsweringPoll: (pollId, answerData, OnConfirm, OnError) => dispatch(pollActions.addAnswer(pollId, answerData, OnConfirm, OnError))
     }
 }

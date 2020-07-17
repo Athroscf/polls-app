@@ -2,7 +2,7 @@ import * as actionTypes from './actionTypes';
 import axios from '../../axios-polls';
 import SweetAlert from '../../components/UI/SweetAlert/Message/Message';
 
-export const initPolls = () => {
+export const initPolls = ( click ) => {
     return dispatch => {
         dispatch(fetchPollsStart())
         axios.get('/polls.json')
@@ -18,6 +18,13 @@ export const initPolls = () => {
                 dispatch(setResults(fetchedPolls));
             })
             .catch( error => {
+                SweetAlert({
+                    show: true,
+                    text: "No se han podido cargar las encuestas!",
+                    icon: "error",
+                    confirmButtonText: "Recargar pagina",
+                    confirmClicked: click
+                })
                 dispatch(fetchPollsFailed( error ))
             })
     }

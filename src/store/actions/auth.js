@@ -63,7 +63,6 @@ export const auth = ( email, password, isSignIn ) => {
 
         axios.post(url, authData)
              .then(response => {
-                console.log('[USER_ID]', response);
                 const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
                 localStorage.setItem('token', response.data.idToken);
                 localStorage.setItem('expirationDate', expirationDate)
@@ -79,7 +78,6 @@ export const auth = ( email, password, isSignIn ) => {
                 })
              })
              .catch(err => {
-                 console.log('[ERROR]', err.response.data.error)
                 switch (err.response.data.error.message) {
                     case 'EMAIL_NOT_FOUND':
                         Swal({
@@ -129,12 +127,9 @@ export const authCheckState = () => {
             dispatch(logout());
         } else {
             const expirationDate = new Date(localStorage.getItem('expirationDate'));
-            console.log('[EXP_DATE]', expirationDate <= new Date());
             if (expirationDate <= new Date()) {
-                console.log('[Entro al segundo IF]');
                 dispatch(logout());
             } else {
-                console.log('[Entro al segundo ELSE]');
                 const userId = localStorage.getItem('userId');
                 dispatch(authSuccess(token, userId));
                 dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000));
