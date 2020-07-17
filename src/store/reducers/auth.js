@@ -17,7 +17,7 @@ const authSuccess = ( state, action ) => {
     return updateObject(state, {
         token: action.idToken,
         userId: action.userId,
-        email: action.email,
+        email: localStorage.getItem('email'),
         error: null,
         loading: null
     });
