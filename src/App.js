@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Switch, withRouter } from 'react-router-dom';
+import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Layout from './hoc/Layout/Layout';
@@ -16,16 +16,31 @@ class App extends Component {
   }
 
   render() {
+    let routes = (
+      <Switch>
+        <Route path="/polls" component={Polls} />
+        <Route path="/auth" component={Auth} />
+        <Route path="/" exact component={Home} />
+        <Redirect to="/" />
+      </Switch>
+    )
+
+    if ( this.props.isAuth ) {
+      routes = (
+        <Switch>
+            <Route path="/polls" component={Polls} />
+            <Route path="/stats" component={Stats} />
+            <Route path="/logout" component={Logout} />
+            <Route path="/" exact component={Home} />
+            <Redirect to="/" />
+        </Switch>
+      )
+    }
+
     return (
       <div>
         <Layout email={this.props.email}>
-          <Switch>
-            <Route path="/polls" component={Polls} />
-            <Route path="/stats" component={Stats} />
-            <Route path="/auth" component={Auth} />
-            <Route path="/logout" component={Logout} />
-            <Route path="/" exact component={Home} />
-          </Switch>
+            {routes}
         </Layout>
       </div>
     );
@@ -34,7 +49,8 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    email: state.auth.email
+    email: state.auth.email,
+    isAuth: state.auth.token !== null
   }
 }
 
