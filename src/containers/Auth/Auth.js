@@ -7,6 +7,7 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import Typography from '../../components/UI/Typography/Typography';
+// import Swal from '../../components/UI/SweetAlert/Message/Message';
 import classes from './Auth.css';
 
 export class Auth extends Component {
@@ -95,7 +96,17 @@ export class Auth extends Component {
 
     switchAuthModeHandler = () => {
         this.setState(prevState => {
-            return { isSignIn: !prevState.isSignIn}
+            return {
+                controls: {
+                    email: {
+                        value: ''
+                    },
+                    password: {
+                        value: ''
+                    }
+                },
+                isSignIn: !prevState.isSignIn
+            }
         })
     }
 
@@ -124,30 +135,6 @@ export class Auth extends Component {
             form = <Spinner />
         }
 
-        let errorMessage = null;
-
-        if (this.props.error) {
-            switch (this.props.error.message) {
-                case 'EMAIL_NOT_FOUND':
-                    errorMessage = (
-                        <p>No existe una cuenta con este correo electronico!</p>
-                    );
-                    break;
-                case 'INVALID_PASSWORD':
-                    errorMessage = (
-                        <p>Contraseña Incorrecta!</p>
-                    );
-                    break;
-                case 'USER_DISABLED':
-                    errorMessage = (
-                        <p>Este usuario ha sido deshabilitado!</p>
-                    );
-                    break;
-                default:
-                    break;
-            }
-        }
-
         let authRedirect = null;
 
         if (this.props.isAuth) {
@@ -157,7 +144,7 @@ export class Auth extends Component {
         return (
             <div className={classes.Auth}>
                 {authRedirect}
-                {errorMessage}
+                {/* {errorMessage} */}
                 <form onSubmit={this.submitHandler}>
                     <Typography variant="h4">
                         {this.state.isSignIn ? 'Iniciar Sesion' : 'Crear Cuenta'}

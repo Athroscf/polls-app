@@ -80,6 +80,43 @@ export const auth = ( email, password, isSignIn ) => {
                 })
              })
              .catch(err => {
+                 console.log('[ERROR]', err.response.data.error)
+                switch (err.response.data.error.message) {
+                    case 'EMAIL_NOT_FOUND':
+                        Swal({
+                            show: true,
+                            text: 'No existe una cuenta con este correo electronico!',
+                            icon: "error",
+                            confirmButtonText: "Ok"
+                        });
+                        break;
+                    case 'INVALID_PASSWORD':
+                        Swal({
+                            show: true,
+                            text: 'Contraseña incorrecta',
+                            icon: "error",
+                            confirmButtonText: "Ok"
+                        });
+                        break;
+                    case 'USER_DISABLED':
+                        Swal({
+                            show: true,
+                            text: 'Tu cuenta ha sido bloqueada!',
+                            icon: "error",
+                            confirmButtonText: "Ok"
+                        });
+                        break;
+                    case 'EMAIL_EXISTS':
+                        Swal({
+                            show: true,
+                            text: 'Ya existe una cuenta con este correo electronico!',
+                            icon: "warning",
+                            confirmButtonText: "Ok"
+                        });
+                        break;
+                    default:
+                        break;
+                }
                 dispatch(authFail(err.response.data.error));
              })
     };

@@ -18,7 +18,9 @@ const message = ( props ) => {
             })
             .then((result) => {
                 if (result.isConfirmed) {
-                    props.confirmClicked()
+                    if (props.confirmClicked) {
+                        props.confirmClicked()
+                    }
                 }
             })
     }
