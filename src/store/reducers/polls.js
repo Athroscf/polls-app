@@ -1,5 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
-import { updateObject } from '../../shared/utility';
+import { updateObject, ObjectIding } from '../../shared/utility';
 
 const initialState = {
     results: null,
@@ -55,25 +55,13 @@ const setResults = ( state, action ) => {
     })
 }
 
-const idingResults = ( state ) => {
-    let fetchedResults = [];
-
-    for ( let key in state) {
-        fetchedResults.push( {
-            ...state[key],
-            id: key
-        })
-    }
-    return fetchedResults;
-}
-
 const updateResults = ( state, action ) => {
     let object = {si: 0, no: 0, accion: 0, deportes: 0, arcade: 0, otro: 0, horas1: 0, horas2: 0,
         horas3: 0, horas4: 0, si1: 0, no1: 0, cantidad1: 0, cantidad2: 0, cantidad3: 0, cantidad4: 0};
 
     for ( let key in state ) {
 
-        const result = idingResults(state[key]);
+        const result = ObjectIding(state[key]);
 
         for ( let secondKey in result) {
 
