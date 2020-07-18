@@ -97,16 +97,20 @@ export class Auth extends Component {
     }
 
     switchAuthModeHandler = () => {
+        const clearValue = updateObject(this.state.controls, {
+                email: updateObject(this.state.controls.email, {
+                    value: '',
+                    touched: false
+                }),
+                password: updateObject(this.state.controls.password, {
+                    value: '',
+                    touched: false
+                }),
+            })
+
         this.setState(prevState => {
             return {
-                controls: {
-                    email: {
-                        value: ''
-                    },
-                    password: {
-                        value: ''
-                    }
-                },
+                controls: clearValue,
                 isSignIn: !prevState.isSignIn
             }
         })
