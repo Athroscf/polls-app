@@ -20,8 +20,17 @@ describe('<Toolbar />', () => {
         expect(wrapper.find(NavigationItems)).toHaveLength(2);
     });
 
-    it('should one <Typography /> element if authenticated', () => {
+    it('should render one <Typography /> element if authenticated', () => {
         wrapper.setProps({isAuth: true});
         expect(wrapper.find(Typography)).toHaveLength(1);
+    });
+
+    it('should render an exact logout button', () => {
+        wrapper.setProps({isAuth: true});
+        expect(wrapper.contains(<NavigationItems
+            content="Cerrar Sesion"
+            variant="h6"
+            link="/logout"
+            exact={false} />)).toEqual(true);
     });
 });
