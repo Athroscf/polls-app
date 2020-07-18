@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import Aux from '../../hoc/Auxiliary/Auxiliary';
 import Button from '../../components/UI/Button/Button';
+import Typography from '../../components/UI/Typography/Typography';
 import classes from './Home.css';
 
 export class Home extends Component {
@@ -16,7 +17,7 @@ export class Home extends Component {
         return (
             <Aux>
                 <div className={classes.Home}>
-                    <h1>Responde nuestra encuesta</h1>
+                    <Typography variant="h1">Responde nuestra encuesta</Typography>
                     <Button
                         click={() => this.nextPageHandler('polls')}>
                             Responder Encuesta
@@ -26,7 +27,7 @@ export class Home extends Component {
                             click={() => this.nextPageHandler('stats')}>
                                 Resultados
                         </Button> :
-                        <p>Para ver los resultados debes iniciar sesion!</p>
+                        <Typography variant="h6">Para ver los resultados debes iniciar sesion!</Typography>
                     }
                 </div>
             </Aux>
