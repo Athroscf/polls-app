@@ -17,7 +17,7 @@ export class Home extends Component {
         return (
             <Aux>
                 <div className={classes.Home}>
-                    <Typography variant="h1">Responde nuestra encuesta</Typography>
+                    <Typography variant="h3">Responde nuestra encuesta</Typography>
                     <Button
                         click={() => this.nextPageHandler('polls')}>
                             Responder Encuesta

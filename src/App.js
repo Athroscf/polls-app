@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -10,42 +10,40 @@ import Auth from './containers/Auth/Auth';
 import Logout from './containers/Auth/Logout/Logout';
 import * as actionTypes from './store/actions';
 
-class App extends Component {
-  componentDidMount () {
-    this.props.onTryAutoSignUp();
-  }
+const app = props => {
+  useEffect(() => {
+    props.onTryAutoSignUp();
+  }, []);
 
-  render() {
-    let routes = (
+  let routes = (
+    <Switch>
+      <Route path="/polls" component={Polls} />
+      <Route path="/auth" component={Auth} />
+      <Route path="/" exact component={Home} />
+      <Redirect to="/" />
+    </Switch>
+  )
+
+  if ( props.isAuth ) {
+    routes = (
       <Switch>
-        <Route path="/polls" component={Polls} />
-        <Route path="/auth" component={Auth} />
-        <Route path="/" exact component={Home} />
-        <Redirect to="/" />
+          <Route path="/polls" component={Polls} />
+          <Route path="/stats" component={Stats} />
+          <Route path="/logout" component={Logout} />
+          <Route path="/" exact component={Home} />
+          <Redirect to="/" />
       </Switch>
     )
-
-    if ( this.props.isAuth ) {
-      routes = (
-        <Switch>
-            <Route path="/polls" component={Polls} />
-            <Route path="/stats" component={Stats} />
-            <Route path="/logout" component={Logout} />
-            <Route path="/" exact component={Home} />
-            <Redirect to="/" />
-        </Switch>
-      )
-    }
-
-    return (
-      <div>
-        <Layout email={this.props.email}>
-            {routes}
-        </Layout>
-      </div>
-    );
   }
-}
+
+  return (
+    <div>
+      <Layout email={props.email}>
+          {routes}
+      </Layout>
+    </div>
+  );
+};
 
 const mapStateToProps = state => {
   return {
@@ -60,4 +58,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(app));
