@@ -26,8 +26,8 @@ const app = props => {
 
   let routes = (
     <Switch>
-      <Route path="/polls" render={() => <Polls />} />
-      <Route path="/auth" render={() => <Auth />} />
+      <Route path="/polls" render={(props) => <Polls {...props}/>} />
+      <Route path="/auth" render={(props) => <Auth {...props}/>} />
       <Route path="/" exact component={Home} />
       <Redirect to="/" />
     </Switch>
@@ -36,8 +36,8 @@ const app = props => {
   if ( props.isAuth ) {
     routes = (
       <Switch>
-          <Route path="/polls" render={() => <Polls />} />
-          <Route path="/stats" render={() => <Stats />} />
+          <Route path="/polls" render={(props) => <Polls {...props} />} />
+          <Route path="/stats" render={(props) => <Stats {...props} />} />
           <Route path="/logout" component={Logout} />
           <Route path="/" exact component={Home} />
           <Redirect to="/" />
