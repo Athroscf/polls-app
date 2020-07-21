@@ -1,14 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense } from 'react';
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Layout from './hoc/Layout/Layout';
 import Home from './containers/Home/Home';
-import Polls from './containers/Polls/Polls';
-import Stats from './containers/Stats/Stats';
-import Auth from './containers/Auth/Auth';
 import Logout from './containers/Auth/Logout/Logout';
 import * as actionTypes from './store/actions';
+
+const Polls = React.lazy(() => {
+  return import('./containers/Polls/Polls');
+});
+
+const Stats = React.lazy(() => {
+  return import('./containers/Stats/Stats');
+});
+
+const Auth = React.lazy(() => {
+  return import('./containers/Auth/Auth');
+});
 
 const app = props => {
   useEffect(() => {
@@ -17,8 +26,8 @@ const app = props => {
 
   let routes = (
     <Switch>
-      <Route path="/polls" component={Polls} />
-      <Route path="/auth" component={Auth} />
+      <Route path="/polls" render={() => <Polls />} />
+      <Route path="/auth" render={() => <Auth />} />
       <Route path="/" exact component={Home} />
       <Redirect to="/" />
     </Switch>
@@ -27,8 +36,8 @@ const app = props => {
   if ( props.isAuth ) {
     routes = (
       <Switch>
-          <Route path="/polls" component={Polls} />
-          <Route path="/stats" component={Stats} />
+          <Route path="/polls" render={() => <Polls />} />
+          <Route path="/stats" render={() => <Stats />} />
           <Route path="/logout" component={Logout} />
           <Route path="/" exact component={Home} />
           <Redirect to="/" />
@@ -39,7 +48,9 @@ const app = props => {
   return (
     <div>
       <Layout email={props.email}>
+        <Suspense fallback={<p>Loading...</p>}>
           {routes}
+        </Suspense>
       </Layout>
     </div>
   );
