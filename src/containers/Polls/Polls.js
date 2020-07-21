@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import * as pollActions from '../../store/actions';
@@ -9,70 +9,55 @@ import classes from './Polls.css';
 import axios from '../../axios-polls';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
-export class Polls extends Component {
-    state = {
-        answers: null,
-        showPoll: false,
-        submitting: null
+const polls = props => {
+    const [ answers, setAnswers ] = useState({});
+    const [ showPoll, setShowPoll ] = useState(false);
+
+    useEffect(() => {
+        props.onInitPolls( reloadPage );
+    }, []);
+
+    const goBackHandler = () => {
+        props.history.goBack();
+    };
+
+    const selectPollHandler = ( id ) => {
+        setTimeout(() => {
+            setShowPoll(true);
+
+            let poll = {...props}
+            poll.pollId = id;
+        }, 500)
     }
 
-    componentDidMount () {
-        this.props.onInitPolls( this.reloadPage );
+    const toHomeHandler = () => {
+        props.history.push('/');
     }
 
-    goBackHandler = () => {
-        this.props.history.goBack();
-    }
+    // const toStatsHandler = () => {
+    //     props.history.push('/stats');
+    // }
 
-    selectPollHandler = ( id ) => {
-        setTimeout( () => {
-            this.setState(( prevState, props ) => {
-                return {
-                    ...prevState,
-                    showPoll: true
-                }
-            })
-        }, 100);
-        let props = {...this.props.pollId};
-        props.pollId = id;
-    }
-
-    submitAnswerHandler = () => {
-        this.setState( { submitting: true } );
-    }
-
-    submitAnswerFailedHandler = () => {
-        this.setState( { submitting: false } );
-    }
-
-    toHomeHandler = () => {
-        this.props.history.push('/');
-    }
-
-    toStatsHandler = () => {
-        this.props.history.push('/stats');
-    }
-
-    reloadPage = () => {
+    const reloadPage = () => {
         window.location.reload()
     }
 
-    answerHandler = event => {
+    const answerHandler = event => {
         event.preventDefault();
 
-        const answer = this.state.answers;
+        const answer = answers;
 
-        this.props.onAnsweringPoll(
-            this.props.pollId,
+        props.onAnsweringPoll(
+            props.pollId,
             answer,
-            this.toHomeHandler,
-            this.reloadPage
+            toHomeHandler,
+            reloadPage
         );
     }
 
-    onChangeHandler = ( event, inputIdentifier ) => {
+    const onChangeHandler = ( event, inputIdentifier ) => {
         const updatedAnswerForm = {
-            ...this.state.answers
+            ...answers
         }
 
         const updatedFormElement = {
@@ -83,53 +68,49 @@ export class Polls extends Component {
         updatedAnswerForm[inputIdentifier] = updatedFormElement;
 
         setTimeout( () => {
-            this.setState({
-                answers: updatedAnswerForm
-            })
+            setAnswers(updatedAnswerForm);
         }, 200)
     }
 
-    render() {
-        let list = this.props.error ? null :
-                                      <Spinner />;
+    let list = props.error ? null :
+                             <Spinner />;
 
-        if ( this.props.polls ) {
-            list = (
-                <Aux>
-                    <PollList
-                        pollList={this.props.polls}
-                        pollSelected={this.selectPollHandler}
-                        clicked={this.goBackHandler} />
-                </Aux>
-            );
-        }
+    if ( props.polls ) {
+        list = (
+            <Aux>
+                <PollList
+                    pollList={props.polls}
+                    pollSelected={selectPollHandler}
+                    clicked={goBackHandler} />
+            </Aux>
+        );
+    }
 
-        let answerPoll = null;
+    let answerPoll = null;
 
-        if (this.state.showPoll) {
-            answerPoll = (
-                <Poll
-                    pollId={this.props.pollId}
-                    questions={this.props.polls[this.props.pollId]}
-                    changed={this.onChangeHandler}
-                    clicked={this.answerHandler} />
-            )
-        }
-
-        if (this.props.answering) {
-            answerPoll = <Spinner />
-        }
-
-        return (
-            <div className={classes.Polls}>
-                <Aux>
-                    {list}
-                    {answerPoll}
-                </Aux>
-            </div>
+    if (showPoll) {
+        answerPoll = (
+            <Poll
+                pollId={props.pollId}
+                questions={props.polls[props.pollId]}
+                changed={onChangeHandler}
+                clicked={answerHandler} />
         )
     }
-}
+
+    if (props.answering) {
+        answerPoll = <Spinner />
+    }
+
+    return (
+        <div className={classes.Polls}>
+            <Aux>
+                {list}
+                {answerPoll}
+            </Aux>
+        </div>
+    );
+};
 
 const mapStateToProps = state => {
     return {
@@ -149,4 +130,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)( Polls, axios );
+export default connect(mapStateToProps, mapDispatchToProps)( polls, axios );
