@@ -1,21 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
 import Aux from '../Auxiliary/Auxiliary';
 import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
 import classes from './Layout.css';
 
-export class Layout extends Component {
-    render() {
-        return (
-            <Aux>
-                <Toolbar isAuth={this.props.isAuthenticated} email={this.props.email}/>
-                <main className={classes.Layout}>
-                    {this.props.children}
-                </main>
-            </Aux>
-        )
-    }
+const layout = props => {
+    return (
+        <Aux>
+            <Toolbar isAuth={props.isAuthenticated} email={props.email}/>
+            <main className={classes.Layout}>
+                {props.children}
+            </main>
+        </Aux>
+    )
 }
 
 const mapStateToProps = state => {
@@ -24,4 +22,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(Layout);
+export default connect(mapStateToProps)(layout);

@@ -7,7 +7,6 @@ import PollList from '../../components/PollList/PollList';
 import Poll from '../../components/Poll/Poll';
 import classes from './Polls.css';
 import axios from '../../axios-polls';
-import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
 export class Polls extends Component {
@@ -91,7 +90,7 @@ export class Polls extends Component {
     }
 
     render() {
-        let list = this.props.error ? <p>No se pudo cargar las encuestas!</p> :
+        let list = this.props.error ? null :
                                       <Spinner />;
 
         if ( this.props.polls ) {
@@ -150,4 +149,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler( Polls, axios ));
+export default connect(mapStateToProps, mapDispatchToProps)( Polls, axios );

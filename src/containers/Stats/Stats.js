@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 
 import * as pollActions from '../../store/actions';
-import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import axios from '../../axios-polls';
 import Chart from '../../components/Chart/Chart';
 import classes from './Stats.css';
@@ -106,4 +105,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler( Stats, axios ));
+export default connect(mapStateToProps, mapDispatchToProps)( Stats, axios );
