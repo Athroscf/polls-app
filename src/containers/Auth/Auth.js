@@ -43,6 +43,7 @@ const auth = props => {
         });
 
     const [ isSignIn, setIsSignIn ] = useState(true);
+    const { onAuth } = props;
 
     const inputChangeHandler = ( event, controlName ) => {
         const updateControls = updateObject(authForm, {
@@ -58,7 +59,7 @@ const auth = props => {
 
     const submitHandler = ( event ) => {
         event.preventDefault();
-        props.onAuth(
+        onAuth(
             authForm.email.value,
             authForm.password.value,
             isSignIn

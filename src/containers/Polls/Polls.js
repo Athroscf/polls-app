@@ -13,9 +13,11 @@ const polls = props => {
     const [ answers, setAnswers ] = useState({});
     const [ showPoll, setShowPoll ] = useState(false);
 
+    const { onInitPolls, onAnsweringPoll } = props;
+
     useEffect(() => {
-        props.onInitPolls( reloadPage );
-    }, []);
+        onInitPolls( reloadPage );
+    }, [onInitPolls]);
 
     const goBackHandler = () => {
         props.history.goBack();
@@ -47,7 +49,7 @@ const polls = props => {
 
         const answer = answers;
 
-        props.onAnsweringPoll(
+        onAnsweringPoll(
             props.pollId,
             answer,
             toHomeHandler,
@@ -58,11 +60,11 @@ const polls = props => {
     const onChangeHandler = ( event, inputIdentifier ) => {
         const updatedAnswerForm = {
             ...answers
-        }
+        };
 
         const updatedFormElement = {
             ...updatedAnswerForm[inputIdentifier]
-        }
+        };
 
         updatedFormElement.answer = event.target.value;
         updatedAnswerForm[inputIdentifier] = updatedFormElement;

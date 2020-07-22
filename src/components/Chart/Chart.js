@@ -7,7 +7,8 @@ const chart = ( props ) => {
         <div>
             <BarChart
                 title={props.title}
-                labels={props.labels} />
+                labels={props.labels}
+                data={props.data} />
         </div>
     )
 }
