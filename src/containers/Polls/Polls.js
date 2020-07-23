@@ -17,6 +17,7 @@ const polls = props => {
 
     useEffect(() => {
         onInitPolls( reloadPage );
+        document.title = 'Responder Encuesta';
     }, [onInitPolls]);
 
     const goBackHandler = () => {

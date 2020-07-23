@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -44,6 +44,14 @@ const auth = props => {
 
     const [ isSignIn, setIsSignIn ] = useState(true);
     const { onAuth } = props;
+
+    useEffect(() => {
+        if (!isSignIn) {
+            document.title = "Encuestas - Crear Cuenta"
+        } else {
+            document.title = "Encuestas - Iniciar Sesión"
+        };
+    }, [isSignIn]);
 
     const inputChangeHandler = ( event, controlName ) => {
         const updateControls = updateObject(authForm, {

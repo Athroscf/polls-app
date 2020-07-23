@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import Aux from '../../hoc/Auxiliary/Auxiliary';
@@ -7,6 +7,9 @@ import Typography from '../../components/UI/Typography/Typography';
 import classes from './Home.css';
 
 const home = props => {
+    useEffect(() => {
+        document.title = 'Inicio'
+    }, [])
     const nextPageHandler = ( page ) => {
         props.history.push({
             pathname: '/' + page
@@ -16,7 +19,7 @@ const home = props => {
     return (
         <Aux>
             <div className={classes.Home}>
-                <Typography variant="h3">Responde nuestra encuesta</Typography>
+                <Typography variant="h4">Responde nuestra encuesta</Typography>
                 <Button
                     click={() => nextPageHandler('polls')}>
                         Responder Encuesta
@@ -26,7 +29,7 @@ const home = props => {
                         click={() => nextPageHandler('stats')}>
                             Resultados
                     </Button> :
-                    <Typography variant="h6">Para ver los resultados debes iniciar sesion!</Typography>
+                    <Typography variant="h6">Para ver los resultados debes iniciar sesión!</Typography>
                 }
             </div>
         </Aux>

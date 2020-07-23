@@ -30,12 +30,12 @@ const toolbar = ( props ) => {
                     <div>
                         { !props.isAuth ?
                             <NavigationItems
-                                content="Iniciar Sesion"
+                                content="Iniciar Sesión"
                                 variant="h6"
                                 link="/auth"
                                 exact={false} /> :
                             <NavigationItems
-                                content="Cerrar Sesion"
+                                content="Cerrar Sesión"
                                 variant="h6"
                                 link="/logout"
                                 exact={false} />
