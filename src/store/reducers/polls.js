@@ -54,6 +54,8 @@ const setResults = ( state, action ) => {
     });
 };
 
+// The update results will be changed in the future in order to be dynamic.
+
 const updateResults = ( state ) => {
     const { answers, pollName } = state.polls[state.pollId];
     let object = {
